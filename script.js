@@ -9,23 +9,32 @@ const resetBtn = document.getElementById("reset");
 
 let box = Math.floor(timer.value);
 
-minutes.textContent = Math.floor(box / 60).toString().padStart(2, "0");
+minutes.textContent = Math.floor(box / 60)
+  .toString()
+  .padStart(2, "0");
 seconds.textContent = (box % 60).toString().padStart(2, "0");
-hours.textContent = Math.floor(box / 3600).toString().padStart(2, "0");
+hours.textContent = Math.floor(box / 3600)
+  .toString()
+  .padStart(2, "0");
 
 let interval;
 startBtn.addEventListener("click", () => {
-  // ذخیره مقدار اولیه به دقیقه
-  const totalMinutes = parseInt(timer.value);
-  timer.value = "";
-  if (totalMinutes >= 60) {
-    hours.textContent = Math.floor(totalMinutes / 60).toString().padStart(2, "0");
-    minutes.textContent = (totalMinutes % 60).toString().padStart(2, "0");
-  } else {
-    minutes.textContent = totalMinutes.toString().padStart(2, "0");
-    hours.textContent = "00";
+  if (!interval) {
+    // فقط اگر تایمر در حال اجرا نیست
+    // ذخیره مقدار اولیه به دقیقه
+    const totalMinutes = parseInt(timer.value);
+    if (totalMinutes >= 60) {
+      hours.textContent = Math.floor(totalMinutes / 60)
+        .toString()
+        .padStart(2, "0");
+      minutes.textContent = (totalMinutes % 60).toString().padStart(2, "0");
+    } else {
+      minutes.textContent = totalMinutes.toString().padStart(2, "0");
+      hours.textContent = "00";
+    }
+    seconds.textContent = "00";
   }
-  seconds.textContent = "00";
+  timer.value = ""; // خالی کردن مقدار تایمر
 
   interval = setInterval(() => {
     let currentSeconds = parseInt(seconds.textContent);
@@ -43,13 +52,9 @@ startBtn.addEventListener("click", () => {
         currentMinutes = 59;
         currentSeconds = 59;
       } else {
-        clearInterval(interval);
-        interval = null;
         startBtn.disabled = false;
-        return;
       }
     }
-
     seconds.textContent = currentSeconds.toString().padStart(2, "0");
     minutes.textContent = currentMinutes.toString().padStart(2, "0");
     hours.textContent = currentHours.toString().padStart(2, "0");
@@ -62,7 +67,6 @@ startBtn.addEventListener("click", () => {
 
 stopBtn.addEventListener("click", () => {
   clearInterval(interval);
-  interval = null;
   startBtn.disabled = false;
 });
 
