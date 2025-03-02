@@ -8,7 +8,6 @@ const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
 
 let box = Math.floor(timer.value);
-
 minutes.textContent = Math.floor(box / 60)
   .toString()
   .padStart(2, "0");
@@ -20,9 +19,12 @@ hours.textContent = Math.floor(box / 3600)
 let interval;
 startBtn.addEventListener("click", () => {
   if (!interval) {
-    // فقط اگر تایمر در حال اجرا نیست
-    // ذخیره مقدار اولیه به دقیقه
     const totalMinutes = parseInt(timer.value);
+    if (!totalMinutes || totalMinutes <= 0) {
+      // بررسی مقدار ورودی
+      return; // اگر مقدار نامعتبر باشد، از اجرای تابع خارج شو
+    }
+    // ذخیره مقدار اولیه به دقیقه
     if (totalMinutes >= 60) {
       hours.textContent = Math.floor(totalMinutes / 60)
         .toString()
