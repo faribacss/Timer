@@ -9,9 +9,7 @@ const resetBtn = document.getElementById("reset");
 
 let box = Math.floor(timer.value);
 
-minutes.textContent = Math.floor(box / 60)
-  .toString()
-  .padStart(2, "0");
+minutes.textContent = Math.floor(box / 60).toString().padStart(2, "0");
 seconds.textContent = (box % 60).toString().padStart(2, "0");
 hours.textContent = Math.floor(box / 3600).toString().padStart(2, "0");
 
